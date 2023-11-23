@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,21 +13,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using wpfData_Step_4.ServiceReferenceSnack;
+using ServiceModel;
 
-namespace wpfData
+namespace WpfHostSnack
 {
     /// <summary>
-    /// Interaction logic for UsersUserControl.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class UsersUserControl : UserControl
+    public partial class MainWindow : Window
     {
-        private ServiceSnackClient service = new ServiceSnackClient();
-        public UsersUserControl()
+        public MainWindow()
         {
             InitializeComponent();
-            UserList list = service.GetAllUsers();
-            usersListView.ItemsSource = list;
+            ServiceHost service = new ServiceHost(typeof(ServiceModel.ServiceSnack));
+            service.Open();
         }
     }
 }

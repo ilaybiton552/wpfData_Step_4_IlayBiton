@@ -11,8 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using wpfData_Step_4.Model;
-using wpfData_Step_4.ViewModel;
+using wpfData_Step_4.ServiceReferenceSnack;
 
 namespace wpfData_Step_4
 {
@@ -21,6 +20,7 @@ namespace wpfData_Step_4
     /// </summary>
     public partial class LoginWindow : Window
     {
+        private ServiceSnackClient service = new ServiceSnackClient();
         public LoginWindow()
         {
             InitializeComponent();
@@ -33,8 +33,8 @@ namespace wpfData_Step_4
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            UserDB userDB = new UserDB();
-            User user = userDB.Login(tbxUsername.Text, tbxPassword.Password.ToString());
+            User user = new User() { UserName = tbxUsername.Text, Password = tbxPassword.Password.ToString() };
+            user = service.Login(user);
             if (user == null)
             {
                 MessageBox.Show("Error in login\nCheck the details", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
